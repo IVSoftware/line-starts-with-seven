@@ -15,6 +15,7 @@ namespace line_starts_with_seve
                 "TextFile.txt");
             try
             {
+
                 // 200K lines of random guids
                 List<string> builder = 
                     Enumerable.Range(0, 200000)
@@ -30,7 +31,7 @@ namespace line_starts_with_seve
 
                 var benchmark = new System.Diagnostics.Stopwatch();
                 benchmark.Start();
-                int totalCount;
+                int totalCount = int.MinValue;
                 foreach (var line in FileLines)
                 {
                     //// If line length is zero, then do nothing
@@ -39,7 +40,10 @@ namespace line_starts_with_seve
                         continue;
                     }
 
-                    switch (line.Substring(1, 1))
+                    // Original code from post
+                    // switch (line.Substring(1, 1))
+                    // Should be:
+                    switch (line.Substring(0, 1))
                     {
                         case "7":
                             totalCount = int.Parse(line.Substring(4, 6));
@@ -51,6 +55,7 @@ namespace line_starts_with_seve
                 }
                 benchmark.Stop();
                 Console.WriteLine($"200K lines using Original code: Elapsed = {benchmark.Elapsed}");
+                Console.WriteLine($"Count = {totalCount}");
 
 
                 benchmark.Restart();
@@ -62,8 +67,10 @@ namespace line_starts_with_seve
                     {
                         continue;
                     }
-
-                    switch (line.Substring(1, 1))
+                    // Original code from post
+                    // switch (line.Substring(1, 1))
+                    // Should be:
+                    switch (line.Substring(0, 1))
                     {
                         case "7":
                             totalCount = int.Parse(line.Substring(4, 6));
@@ -75,6 +82,7 @@ namespace line_starts_with_seve
                 breakFromInner:
                 benchmark.Stop();
                 Console.WriteLine($"200K lines using Original code with reverse: Elapsed = {benchmark.Elapsed}");
+                Console.WriteLine($"Count = {totalCount}");
 
                 benchmark.Restart();
                 var count =
