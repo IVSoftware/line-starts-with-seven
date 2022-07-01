@@ -15,11 +15,10 @@ namespace line_starts_with_seve
                 "TextFile.txt");
             try
             {
-
                 // 200K lines of random guids
                 List<string> builder = 
                     Enumerable.Range(0, 200000)
-                    .Select(n => new System.Guid().ToString())
+                    .Select(n => $"{{{System.Guid.NewGuid().ToString()}}}")
                     .ToList();
 
                 var footer =
